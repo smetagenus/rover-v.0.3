@@ -38,7 +38,7 @@ if ($input->parsInput($_GET['textarea'])) // парсим входные дан�
   {
      $polygonSize = new Coordinates($input->getPolygonSize());
      $polygon = new Polygon($polygonSize);
-     echo "Размер полигона ".$polygon->getSizeX()."x".$polygon->getSizeY()."<br>";
+     echo "Размер полигона ".$polygon->getSize()->getX()."x".$polygon->getSize()->getY()."<br>";
 
      for ($n = 1; $n <= $input->getRoverCnt(); $n++) {
         
@@ -51,13 +51,14 @@ if ($input->parsInput($_GET['textarea'])) // парсим входные дан�
               } else break;
             if ($input->parsMoving($lines[$n*2],$n))     // Команды для n-го ровера
               {
-                $coord = new Coordinates($input->getCoord());
-                $orient = new Orientation($input->getOrient());
+                $coord->setCoord($input->getCoord());
+                $orient->setSide($input->getOrient());
                 $rover[$n]->setPosition($coord, $orient);
               } else break;
               
-        echo "Начальная позиция ровера №".$n.": ". $rover[$n]->getStartX()  . " " . $rover[$n]->getStartY() . " " . $rover[$n]->getStartSide() ."<br>";
-        echo "Измененная позиция ровера №".$n.": ". $rover[$n]->getPosX()  . " " . $rover[$n]->getPosY() . " " . $rover[$n]->getSide() ."<br>";    
+        echo "Начальная позиция ровера №".$n.": ". $rover[$n]->getStartPos()->getX()  . " " . $rover[$n]->getStartPos()->getY() . " " . $rover[$n]->getStartSide()->getSide() ."<br>";
+        echo "Измененная позиция ровера №".$n.": ". $rover[$n]->getCurrentPos()->getX()  . " " . $rover[$n]->getCurrentPos()->getY() . " " . $rover[$n]->getCurrentSide()->getSide() ."<br>";
+        //echo "Измененная позиция ровера №".$n.": ". $rover[$n]->getPosX()  . " " . $rover[$n]->getPosY() . " " . $rover[$n]->getSide() ."<br>";    
     } 
   } 
 

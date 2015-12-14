@@ -6,25 +6,21 @@ namespace Mars
 // Класс Ровер
 class Rover
 {
-  protected $_posX = "0";
-  protected $_posY = "0";
-  protected $_side = "N";
-  protected $_startPosX = "0";
-  protected $_startPosY = "0";
-  protected $_startSide = "N";
+  protected $_currentPos;
+  protected $_currentSide;
+  protected $_startPos;
+  protected $_startSide;
   
   public function __construct(Coordinates $coord, Orientation $orient)
   {
-     $this->_posX = $this->_startPosX = $coord->getX();
-     $this->_posY = $this->_startPosY = $coord->getY();
-     $this->_side = $this->_startSide = $orient->getSide();
+     $this->_currentPos = $this->_startPos = $coord;
+     $this->_currentSide = $this->_startSide = $orient;
   }
   
   public function setPosition(Coordinates $coord, Orientation $orient)
   {
-     $this->_posX = $coord->getX();
-     $this->_posY = $coord->getY();
-     $this->_side = $orient->getSide();
+     $this->_currentPos = $coord;
+     $this->_currentSide = $orient;
   }
   
  /**
@@ -38,8 +34,8 @@ class Rover
   **/           
   public function checkPos(Polygon $polygon, Coordinates $coord)
   {
-      $sizeX = $polygon->getSizeX();
-      $sizeY = $polygon->getSizeY();
+      $sizeX = $polygon->getSize()->getX();
+      $sizeY = $polygon->getSize()->getY();
       $posX = $coord->getX();
       $posY = $coord->getY();
       
@@ -49,26 +45,18 @@ class Rover
         return true;
   } 
   
-  public function getPosX()
+  public function getCurrentPos()
   {
-    return $this->_posX;
+    return $this->_currentPos;
   }
-  public function getPosY()
+  public function getCurrentSide()
   {
-    return $this->_posY;
-  }
-  public function getSide()
-  {
-    return $this->_side;
+    return $this->_currentSide;
   } 
   
-  public function getStartX()
+  public function getStartPos()
   {
-    return $this->_startPosX;
-  }
-  public function getStartY()
-  {
-    return $this->_startPosY;
+    return $this->_startPos;
   }
   public function getStartSide()
   {
